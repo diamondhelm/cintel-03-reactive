@@ -39,32 +39,32 @@ with ui.layout_columns():
         ui.card_header("Plotly of Penguin Species")
         @render.data_frame
         def table():
-            return render.DataTable(data=penguins_df)
+            return render.DataTable(data=filtered_data())
 
     with ui.card(full_screen=True):
         ui.card_header( "Grid of Penguin Species")
         @render.data_frame
         def grid():
-            return render.DataGrid(data=penguins_df)
+            return render.DataGrid(data=filtered_data())
 
     with ui.layout_columns():
         with ui.card(full_screen=True):
             ui.card_header("Plotly Histogram:Penguins by Body Mass")
         @render_plotly
         def plot1():
-            return px.histogram(penguins_df, x="body_mass_g", color="species", nbins=input.plotly_bin_count())
+            return px.histogram(filtered_data(), x="body_mass_g", color="species", nbins=input.plotly_bin_count())
             
     with ui.card(full_screen=True):
         ui.card_header("Penguins by Flipper Length")
         @render.plot
         def plot2():
-            return sns.histplot(data=penguins_df, x="flipper_length_mm", hue="species", bins=input.seaborn_bin_count())
+            return sns.histplot(data=filtered_data(), x="flipper_length_mm", hue="species", bins=input.seaborn_bin_count())
 
 with ui.card(full_screen=True):
     ui.card_header("Plotly Scatterplot: Various Species")
     @render_plotly
     def plotly_scatterplot():
-        return px.scatter(data_frame=penguins_df, x="body_mass_g", y="bill_length_mm", color="species", hover_name="island", symbol="sex")
+        return px.scatter(data_frame=filtered_data(), x="body_mass_g", y="bill_length_mm", color="species", hover_name="island", symbol="sex")
 
 # --------------------------------------------------------
 # Reactive calculations and effects
